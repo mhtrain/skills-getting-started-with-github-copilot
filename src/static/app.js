@@ -20,11 +20,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const spotsLeft = details.max_participants - details.participants.length;
 
+        // add status class based on availability
+        if (spotsLeft <= 0) {
+          activityCard.classList.add("full");
+        } else if (spotsLeft <= 3) {
+          activityCard.classList.add("few-spots");
+        } else {
+          activityCard.classList.add("open");
+        }
+
         activityCard.innerHTML = `
           <h4>${name}</h4>
           <p>${details.description}</p>
           <p><strong>Schedule:</strong> ${details.schedule}</p>
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
+          <p><strong>Participants:</strong></p>
+          <ul>
+            ${details.participants.map(participant => `<li>${participant}</li>`).join('')}
+          </ul>
         `;
 
         activitiesList.appendChild(activityCard);
